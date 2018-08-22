@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Twitch Developer Documentation</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="img/logo/logo_twitch.png">
 	<link rel="stylesheet" href="css/reset.css">
 	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
@@ -16,10 +17,13 @@
 			<img src="img/logo/twitch-developers-logo.png" alt="">
 			<span>RU</span>
 		</a>
-		<button class="btn-b btn-r">Поддержать Проект</button>
+		<button class="btn-b btn-r" onclick="yanMoney()">Поддержать Проект</button>
 		<a href="https://dev.twitch.tv/docs" class="btn-t">Перейти в Twitch</a>
 	</header>
 	<section class="bg-head"></section>
+	<section class="modal-window">
+		<iframe src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0&targets-hint=&default-sum=10&button-text=14&hint=&successURL=&quickpay=shop&account=410017168101073" width="100%" height="226" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+	</section>
 	<aside>
 		<ul>
 			<li><a href="index.html">Обзор</a></li>
@@ -156,5 +160,7 @@
 			</li>
 		</ul>
 	</footer>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="js/script.js"></script>
 </body>
 </html>
