@@ -1,0 +1,35 @@
+footer {
+  background-color: #121212;
+  font-family: 'Merriweather Sans', sans-serif; }
+  footer ul {
+    display: flex;
+    padding: 25px 0;
+    align-items: center; }
+    footer ul li {
+      width: 30%;
+      margin: 0 auto;
+      text-align: center;
+      color: #fff; }
+      footer ul li a {
+        color: #fff; }
+  footer .info .logo {
+    justify-content: center; }
+    footer .info .logo img {
+      width: 64px; }
+    footer .info .logo span {
+      font-size: 16px; }
+  footer .info p {
+    margin-top: 10px; }
+  footer .social a {
+    font-size: 28px; }
+    footer .social a:hover {
+      color: #ccc; }
+  footer .money {
+    display: block; }
+    footer .money h2 {
+      font-size: 20px;
+      margin-bottom: 10px; }
+    footer .money li {
+      width: 100%; }
+      footer .money li a {
+        color: #3c619c; }

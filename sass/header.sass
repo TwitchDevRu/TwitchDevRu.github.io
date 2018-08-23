@@ -1,0 +1,59 @@
+header	
+	background: rgba(0, 0, 0, 0.64)
+	z-index: 50
+	position: absolute
+	width: 100%
+	height: 90px
+	top: 0
+	left: 0
+	backface-visibility: hidden
+	font-family: Arial
+	padding: 0px 40px
+	display: flex
+	align-items: center
+	font-family: 'Merriweather Sans', sans-serif
+	.btn-b
+		margin-right: 20px
+.logo
+	display: flex
+	align-items: center
+	margin-right: auto
+	color: #fff
+	span
+		font-size: 30px
+		margin-left: 10px
+	img
+		width: 128px
+.bg-head
+	background: linear-gradient(to right, #3d2fae, #b769d1);
+	height: 90px
+	z-index: 49
+.bg-black
+	&:after
+		content: ''
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		background: rgba(0,0,0,.68)
+		z-index: 10
+.modal-window
+	position: absolute
+	left: calc(50% - 140px)
+	top: calc(50vh - 75px)	
+	z-index: 12
+	background-color: #fff
+	padding: 5px 0
+	display: none
+	border: 2px dashed #ccc
+	h2
+		text-align: center
+		font-size: 26px
+		font-family: Arial
+		border-bottom: 2px dashed #ccc
+	ul
+		padding: 30px 50px
+		li
+			text-align: center
+	

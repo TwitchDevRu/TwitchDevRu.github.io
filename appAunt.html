@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Приложения и Аутентификация | Twitch Developer Documentation</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="img/logo/logo_twitch.png">
+	<link rel="stylesheet" href="css/reset.css">
+	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
+	<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css"> 
+
+	<!-- style  -->
+
+	<link rel="stylesheet" href="css/header.css">
+	<link rel="stylesheet" href="css/aside.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/footer.css">
+
+	<link rel="stylesheet" href="css/appAutn.css">
+</head>
+<body>
+	<header>
+		<a href="index.html" class="logo">
+
+			<img src="img/logo/twitch-developers-logo.png" alt="">
+			<span>RU</span>
+		</a>
+		<button class="btn-b btn-r" onclick="yanMoney()">Поддержать Проект</button>
+		<a href="https://dev.twitch.tv/docs" class="btn-t">Перейти в Twitch</a>
+	</header>
+	<section class="bg-head"></section>
+	<section class="modal-window">
+		<h2>Поддержать проект</h2>
+		<ul>
+			<li>Qiwi: +7 909 145‑55‑57</li>
+			<li>Яндекс: <a href="https://money.yandex.ru/to/410017168101073" target="_blanck">410017168101073</a></li>
+		</ul>
+	</section>
+	<aside>
+		<ul class="title">
+			<li><a href="index.html">Обзор</a></li>
+			<li class="aside-list active">
+				<a href="appAunt.html">Приложения и Аутентификация</a>
+				<ul class="subtitle">
+					<li><a href="">Руководство</a></li>
+					<li><a href="">Получение токенов: OAuth</a></li>
+					<li><a href="">Получение токенов: OIDC</a></li>
+				</ul>
+			</li>
+
+			<li class="aside-list"><a href="">Чат бот и IRC</a></li>
+			<li class="aside-list"><a href="">Вознаграждение</a></li>
+			<li class="aside-list"><a href="">Встраивание в Twitch</a></li>
+			<li class="aside-list"><a href="">Разширения</a></li>
+			<li class="aside-list"><a href="">Аналитика</a></li>
+			<li class="aside-list"><a href="">Мобильные ссылки</a></li>
+			<li class="aside-list"><a href="">Публичная Подписка</a></li>
+			<li class="aside-list"><a href="">Новый Twitch API</a></li>
+			<li class="aside-list"><a href="">Twitch API v5</a></li>
+			<li><a href="">Словарь</a></li>
+		</ul>
+	</aside>
+	<main>
+		<h1>Приложения и Аутентификация</h1>
+		<section>
+			<h2>Введение</h2>
+			<p>Это руководство поможет разработчикам использовать Twitch Authentication, что позволяет вашему приложению выполнять действия от имени учетной записи Twitch или получать доступ к определенным данным об учетной записи пользователя. Существует несколько способов получить доступ к учетной записи Twitch от имени пользователя. Мы используем части протокола OAuth 2.0.</p>
+			<p>В дополнение к OAuth Twitch поддерживает OIDC (OpenID Connect) для более безопасного потока OAuth 2.0. Тонеры OIDC совместимы с услугами, созданными для соответствия требованиям OIDC, такими как Cognito от Amazon Web Services.</p>
+			<h4>Аутентификация включает:</h4>
+			<ul class="list-d">
+				<li>1. <a href="">Зарегистрируйте свое приложение</a>, чтобы получить идентификатор клиента и секрет клиента.</li>
+				<li>2. <a href="">Получение токена</a>. Это включает указание <a href="">областей</a> или разрешений, требуемых вашим приложением.</li>
+				<li>3. Отправка маркера в ваш запрос API для аутентификации запросов API.</li>
+			</ul>
+			<p>Когда мы описываем этапы, мы предоставляем образцы запросов, которые будет создано вашим приложением, чтобы ваши пользователи предоставили вам доступ к их активности просмотра.</p>
+			<p>Для удобства чтения часть кода с параметризованным примером показана на нескольких строках; реальные примеры находятся на одной линии.</p>
+			<p><i>Образцы кода доступны на странице <a href="https://dev.twitch.tv/start/" target="_blanck">Get Started на веб-сайте Twitch</a>.</i></p>
+			<p class="warning">
+    			<b>Предупреждение:</b> обрабатывайте свой токен как пароль. Например, никогда не используйте токены доступа в любом общедоступном URL-адресе и никогда не показывайте маркеры на любой веб-странице, не требуя щелчка, чтобы удалить обфускацию. <i>Держите жетоны в секрете!</i>
+			</p>
+		</section>
+		<section>
+			<h2>Проверка запросов</h2>
+			<p>Для разработчиков, которые используют аутентификацию Twitch для целей входа в систему, токены доступа должны быть проверены на повторяющийся интервал. Если ваша служба использует Twitch в качестве формы аутентификации (чтобы убедиться, что пользователи - те, кого они говорят в своем приложении), периодическая проверка ранее выпущенных токенов OAuth гарантирует, что пользователи, которые разрешили ваше приложение, не решили отключить интеграцию.</p>
+			<p>Мы рекомендуем проверять токены доступа перед тем, как делать запросы API, которые выполняют мутации, или получают доступ к конфиденциальной информации пользователей, если прошло более одного часа с момента последней проверки.</p>
+			<p>Twitch периодически проводит аудит. Если мы обнаружим приложение, которое не повторяет проверку токенов доступа (то есть приложение, которое проверяет только для входа в систему, а не после этого), мы будем обращаться к разработчикам и работать с ними для решения проблемы. Если проблема не устранена, мы можем предпринять карательные действия, такие как аннулирование ключа API разработчика или дросселирование производительности приложения.</p>
+			<p>Валидация важна из-за того, как работают токены доступа OAuth и ожидания конечного пользователя для контроля сеанса OAuth. Например, пользователи, которые предпочитают отключать вашу интеграцию со своими учетными записями Twitch, могут сделать это из своих настроек учетной записи в Twitch. Когда пользователь отключается от интеграции, все токены OAuth между этим пользователем и эта интеграция аннулируются. В этом случае ожидается, что токены OAuth привязаны к сеансам сторонних служб; как таковые, любые существующие сеансы между отключенным пользователем и этими службами также должны быть аннулированы.</p>
+			<p>При проверке каждого из ваших запросов отправьте запрос конечной точке проверки (https://id.twitch.tv/oauth2/validate) с вашим токеном OAuth в заголовке. Если вы аутентифицированы, ответ включает статус вашего токена. Успешный ответ указывает, что ваш токен доступа действителен.</p>
+			<h4>Вот пример запроса:</h4>
+			<pre>
+					curl -H "Authorization: OAuth &lt;Токен доступа>" https://id.twitch.tv/oauth2/validate
+			</pre>
+			<h4>И вот пример ответа:</h4>
+			<pre>
+				{
+					"client_id": "&lt;Ваш клиент ID>",
+					"login": "&lt;Авторизованный пользователь login>",
+					"scopes": [
+						"&lt;Запрошенные области>"
+				 	],
+					"user_id": "&lt;ID Авторизованного пользователя>"
+				}
+			</pre>
+			
+		</section>
+		<section>
+			<h2>Регистрация</h2>
+		</section>
+	</main>
+	<footer>
+		<ul>
+			<li class="info">
+				<a href="" class="logo">
+					<img src="img/logo/twitch-developers-logo.png" alt="">
+					<span>RU</span>
+				</a>
+				<p>Данный сайт разрабатываеться для удобного искользовани Twitch Developer в России</p>
+				
+			</li>
+			<li class="social">
+				<ul>
+					<li><a href="https://vk.com/id473238919" target="_blanck"><i class="fa fa-vk" aria-hidden="true"></i></a></li>
+					<li><a href="https://twitter.com/l4legenda" target="_blanck"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+					<li><a href="https://www.youtube.com/channel/UCIDUNv2XQyBrg9pe7n71RDw" target="_blanck"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+					<li><a href="https://github.com/L4legenda" target="_blanck"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+					<li><a href="mailto:l4legenda@gmail.com" target="_blanck"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+
+				</ul>
+			</li>
+			<li>
+				<ul class="money">
+					<h2>Помощь проекту:</h2>
+					<li>Qiwi: +7 909 145‑55‑57</li>
+					<li>Яндекс: <a href="https://money.yandex.ru/to/410017168101073" target="_blanck">410017168101073</a></li>
+				</ul>
+			</li>
+		</ul>
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="js/script.js"></script>
+</body>
+</html>

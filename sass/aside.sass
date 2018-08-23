@@ -1,0 +1,49 @@
+aside
+	width: 250px
+	background-color: #fcfcfc
+	position: absolute
+	left: 0
+	top: 90px
+	border-right: 1px solid #e6e5e4
+	.title
+		>li
+			
+			border-bottom: 1px solid #e6e5e4
+			>a
+				display: block
+				padding: 15px
+				padding-left: 30px
+				font-family: 'Merriweather Sans', sans-serif
+				color: #000
+				font-weight: bold
+				&:hover
+					background-color: #efefef
+	.subtitle
+		li
+			border-bottom: none
+			a
+				font-family: 'Merriweather Sans', sans-serif
+				font-size: 14px
+				display: block
+				padding: 10px
+				padding-left: 30px
+				color: #000
+				font-weight: bold
+				&:hover
+					text-decoration: underline
+.aside-list
+	position: relative;
+	&:before
+		content: '>'
+		font-family: 'Merriweather Sans', sans-serif
+		display: inline-block
+		padding: 0 7px 0 0
+		position: absolute
+		left: 10px
+		top: 15px
+.active
+	&:before
+		content: '>'
+		transform: rotate(90deg) translateX(5px)
+
+	
